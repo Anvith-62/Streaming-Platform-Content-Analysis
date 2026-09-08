@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streaming Platform Content Analysis</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-chart-line logo-icon"></i>
+                <h2>StreamAnalytica</h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
+                <a href="#questions" class="nav-item"><i class="fa-solid fa-circle-question"></i> Q&A Insights</a>
+                <a href="#explorer" class="nav-item"><i class="fa-solid fa-database"></i> Data Explorer</a>
+                <a href="#pipeline" class="nav-item"><i class="fa-solid fa-gears"></i> Analysis Pipeline</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Status: <span class="status-badge connected"><span class="dot"></span> Online</span></p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-title">
+                    <h1>Content Dashboard</h1>
+                    <p class="subtitle">Multi-Platform Content Distribution & Trend Analysis</p>
+                </div>
+                
+                <!-- Platform Filters -->
+                <div class="platform-filter-container">
+                    <span class="filter-label">Filter Platform:</span>
+                    <div class="platform-selector">     
+
+                        <button class="platform-btn active" data-platform="All">All Platforms</button>
+                        <button class="platform-btn" data-platform="Netflix"><i class="fa-brands fa-netflix"></i> Netflix</button>
+                        <button class="platform-btn" data-platform="Amazon Prime"><i class="fa-brands fa-amazon"></i> Prime Video</button>
+                        <button class="platform-btn" data-platform="Disney+"><i class="fa-solid fa-play"></i> Disney+</button>
+                        <button class="platform-btn" data-platform="Hulu"><i class="fa-brands fa-amazon"></i> Hulu</button>
+
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="content-section">
+                <!-- KPI Section -->
+                <div class="kpi-grid">
+                    <div class="kpi-card" id="kpi-titles">
+                        <div class="kpi-icon-container bg-primary-glow">
+                            <i class="fa-solid fa-film"></i>
+                        </div>
+                        <div class="kpi-data">
+                            <h3 class="kpi-value" id="val-titles">-</h3>
+                            <p class="kpi-title">Total Titles</p>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card" id="kpi-movies">
+                        <div class="kpi-icon-container bg-netflix-glow">
+                            <i class="fa-solid fa-clapperboard"></i>
+                        </div>
+                        <div class="kpi-data">
+                            <h3 class="kpi-value" id="val-movies">-</h3>
+                            <p class="kpi-title">Movies</p>
+                            <span class="kpi-subtext" id="pct-movies">-</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card" id="kpi-shows">
+                        <div class="kpi-icon-container bg-prime-glow">
+                            <i class="fa-solid fa-tv"></i>
+                        </div>
+                        <div class="kpi-data">
+                            <h3 class="kpi-value" id="val-shows">-</h3>
+                            <p class="kpi-title">TV Shows</p>
+                            <span class="kpi-subtext" id="pct-shows">-</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card" id="kpi-countries">
+                        <div class="kpi-icon-container bg-disney-glow">
+                            <i class="fa-solid fa-globe"></i>
+                        </div>
+                        <div class="kpi-data">
+                            <h3 class="kpi-value" id="val-countries">-</h3>
+                            <p class="kpi-title">Countries</p>
+                            <span class="kpi-subtext" id="top-country">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Layout -->
+                <div class="charts-grid">
+                    <div class="chart-card large-chart">
+                        <div class="chart-header">
+                            <h3><i class="fa-solid fa-chart-area"></i> Release Year Trend</h3>
+                            <span class="chart-info">Content growth trajectory over time</span>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="chart-release-year"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fa-solid fa-chart-pie"></i> Content Mix</h3>
+                            <span class="chart-info">Movies vs TV Shows ratio</span>
+                        </div>
+                        <div class="chart-body compact-chart">
+                            <canvas id="chart-content-mix"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fa-solid fa-tags"></i> Top Genres</h3>
+                            <span class="chart-info">Most common categories in library</span>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="chart-top-genres"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fa-solid fa-flag"></i> Top Production Countries</h3>
+                            <span class="chart-info">Leading content creator nations</span>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="chart-top-countries"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fa-solid fa-child-reaching"></i> Rating Distribution</h3>
+                            <span class="chart-info">Maturity rating categories</span>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="chart-ratings"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Q&A Section -->
+            <section id="questions-section" class="content-section hidden">
+                <div class="section-card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-circle-question"></i> Dashboard Q&A Insights</h2>
+                        <p class="card-subtitle">Answering core analytical and business questions from the dataset library</p>
+                    </div>
+                    
+                    <div class="qa-container">
+                        <!-- Questions will be dynamically loaded and filled here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Explorer Section -->
+            <section id="explorer-section" class="content-section hidden">
+                <div class="section-card">
+                    <div class="card-header flex-header">
+                        <div>
+                            <h2><i class="fa-solid fa-database"></i> Content Data Explorer</h2>
+                            <p class="card-subtitle">Search, filter, and inspect individual titles in the dataset</p>
+                        </div>
+                        
+                        <!-- Table Filters -->
+                        <div class="table-controls">
+                            <div class="search-box">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="table-search" placeholder="Search title, director, cast...">
+                            </div>
+                            <select id="filter-type">
+                                <option value="All">All Types</option>
+                                <option value="Movie">Movies</option>
+                                <option value="TV Show">TV Shows</option>
+                            </select>
+                            <select id="filter-rating">
+                                <option value="All">All Ratings</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table id="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Show ID</th>
+                                    <th>Platform</th>
+                                    <th>Type</th>
+                                    <th>Title</th>
+                                    <th>Director</th>
+                                    <th>Country</th>
+                                    <th>Release Year</th>
+                                    <th>Rating</th>
+                                    <th>Duration</th>
+                                    <th>Genres</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- CSV Rows will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <span id="page-info">Showing page 1 of 1</span>
+                        <div class="pagination-buttons">
+                            <button id="btn-prev" class="pagination-btn"><i class="fa-solid fa-chevron-left"></i> Previous</button>
+                            <button id="btn-next" class="pagination-btn">Next <i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pipeline Management Section -->
+            <section id="pipeline-section" class="content-section hidden">
+                <div class="pipeline-grid">
+                    <!-- CSV Drag and Drop -->
+                    <div class="section-card">
+                        <div class="card-header">
+                            <h2><i class="fa-solid fa-cloud-arrow-up"></i> Upload Custom Dataset</h2>
+                            <p class="card-subtitle">Upload a new streaming platform CSV dataset to regenerate the dashboard</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="upload-dropzone" id="upload-zone">
+                                <i class="fa-solid fa-file-csv upload-icon"></i>
+                                <h3>Drag & Drop CSV File</h3>
+                                <p>or click to browse local files</p>
+                                <span class="upload-limit">File must follow standard Kaggle/Netflix schema columns</span>
+                                <input type="file" id="csv-file-input" accept=".csv" class="hidden">
+                            </div>
+                            <div class="upload-progress-bar hidden" id="upload-progress-container">
+                                <div class="progress-bar-fill" id="upload-progress-fill"></div>
+                            </div>
+                            <div id="upload-status" class="status-msg"></div>
+                        </div>
+                    </div>
+
+                    <!-- Pipeline Execution -->
+                    <div class="section-card">
+                        <div class="card-header">
+                            <h2><i class="fa-solid fa-terminal"></i> Python Data Pipeline Pipeline</h2>
+                            <p class="card-subtitle">Execute backend ETL scripts and view logging diagnostics in real-time</p>
+                        </div>
+                        <div class="card-body terminal-body">
+                            <div class="terminal-controls">
+                                <button id="btn-run-pipeline" class="btn-primary"><i class="fa-solid fa-play"></i> Execute analysis.py</button>
+                                <span class="pipeline-loader hidden" id="pipeline-loader"><i class="fa-solid fa-spinner fa-spin"></i> Running...</span>
+                            </div>
+                            <div class="terminal-screen" id="terminal-output">
+                                <span class="terminal-line system-line">[System] StreamAnalytica ETL logs ready. Click execute to begin.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- CDNs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Frontend Controller -->
+    <script src="app.js"></script>
+</body>
+</html>
